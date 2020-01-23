@@ -2,6 +2,7 @@ extern crate soez_core;
 
 use soez_core::prelude::*;
 
+#[derive(Debug)]
 struct SomeState;
 
 impl State for SomeState {

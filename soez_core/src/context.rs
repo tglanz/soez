@@ -21,7 +21,7 @@ pub struct Context {
 }
 
 impl Context {
-    fn print_stuff(&self) {
+    pub fn print_stuff(&self) {
         println!("meta: {:#?}", self.meta);
         println!("state: {:#?}", self.states.peek());
     }
