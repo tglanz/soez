@@ -1,59 +1,42 @@
+use specs::{Dispatcher, DispatcherBuilder, World};
+
 use crate::states::{State, Pushdown};
 
-#[derive(Debug)]
-struct GameMeta {
-    pub name: String,
-    pub author: String,
+pub struct Context<'a, 'b> {
+    states: Pushdown,
+    world: World,
+    dispatcher: Dispatcher<'a, 'b>,
 }
 
-impl Default for GameMeta {
-    fn default() -> Self {
-        Self {
-            name: String::from("unknown"),
-            author: String::from("unknown"),
-        }
+impl<'a, 'b> Context<'a, 'b> {
+    pub fn get_world_mut(&mut self) -> &mut World {
+        &mut self.world
     }
 }
 
-pub struct Context {
-    meta: GameMeta,
-    states: Pushdown
-}
-
-impl Context {
-    pub fn print_stuff(&self) {
-        println!("meta: {:#?}", self.meta);
-        println!("state: {:#?}", self.states.peek());
-    }
-}
-
-pub struct ContextBuilder {
-    meta: GameMeta,
+pub struct ContextBuilder<'a, 'b> {
     initial_state: Box<dyn State>,
+    dispatcher: Option<Dispatcher<'a, 'b>>,
 }
 
-impl ContextBuilder {
+impl<'a, 'b> ContextBuilder<'a, 'b> {
     pub fn create(initial_state: Box<dyn State>) -> Self {
         Self {
-            meta: GameMeta::default(),
-            initial_state
+            initial_state,
+            dispatcher: None,
         }
     }
 
-    pub fn build(self) -> Context {
+    pub fn build(self) -> Context<'a, 'b> {
         Context {
-            meta: self.meta,
             states: Pushdown::new(self.initial_state),
+            dispatcher: self.dispatcher.unwrap_or(DispatcherBuilder::new().build()),
+            world: World::empty(),
         }
     }
 
-    pub fn with_name(mut self, name: &str) -> Self {
-        self.meta.name = String::from(name);
-        self
-    }
-
-    pub fn with_author(mut self, author: &str) -> Self {
-        self.meta.author = String::from(author);
+    pub fn with_dispatcher(mut self, dispatcher: Dispatcher<'a, 'b>) -> Self {
+        self.dispatcher = Some(dispatcher);
         self
     }
 }
