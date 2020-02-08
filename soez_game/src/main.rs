@@ -2,6 +2,7 @@ extern crate log;
 extern crate log4rs;
 extern crate raylib;
 
+pub mod services;
 pub mod states;
 pub mod components;
 pub mod systems;
@@ -9,7 +10,7 @@ pub mod resources;
 pub mod prelude;
 
 use specs::prelude::*;
-use prelude::*;
+use crate::prelude::*;
 
 #[derive(Debug)]
 pub struct OnBoardingState;
@@ -24,19 +25,21 @@ fn initialize_logger() {
     log4rs::init_file("resources/log4rs.yaml", Default::default()).unwrap();
 }
 
-fn create_dispatcher<'a, 'b>(raylib: RaylibContext) -> Dispatcher<'a, 'b> {
+fn create_dispatcher<'a, 'b>(raylib_thread: raylib::RaylibThread) -> Dispatcher<'a, 'b> {
     DispatcherBuilder::new()
-        .with_thread_local(RenderSystem::new(raylib))
+        .with_thread_local(RenderSystem::new(raylib_thread))
         .with(SpeedSystem, "~SpeedSystem", &[])
         .build()
 }
 
-fn create_world(dispatcher: &mut Dispatcher) -> World {
+fn create_world(dispatcher: &mut Dispatcher, raylib_handle: raylib::RaylibHandle) -> World {
     let mut world = World::new();
-    world.insert::<Application>(Default::default());
+    world.insert(RaylibContext::new(raylib_handle));
+    world.insert(Application::default());
     dispatcher.setup(&mut world);
 
     world.register::<Position>();
+    world.register::<Velocity>();
 
     world
 }
@@ -55,16 +58,18 @@ fn main() {
     //     ..Default::default()
     // });
 
-    let mut dispatcher = create_dispatcher(Default::default());
-    let mut world = create_world(&mut dispatcher);
+    let (raylib_handle, raylib_thread) = raylib::init().build();
+
+    let mut dispatcher = create_dispatcher(raylib_thread);
+    let mut world = create_world(&mut dispatcher, raylib_handle);
 
     world.create_entity()
         .with(Position::new(0.0, 0.0))
-        .with(Circle::new(10.0, 0))
         .with(Velocity::new(0.1, 0.1))
+        .with(Rendering::Circle(10.0, Color::Red))
         .build();
 
-    while !world.fetch::<Application>().window_should_close {
+    while !world.fetch::<RaylibContext>().handle.window_should_close() {
         dispatcher.dispatch(&world);
     }
     // while !rl.window_should_close() {

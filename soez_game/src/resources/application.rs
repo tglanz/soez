@@ -1,4 +1,14 @@
-#[derive(Debug, Default)]
+use crate::prelude::Color;
+
+#[derive(Debug)]
 pub struct Application {
-    pub window_should_close: bool
+    pub clear_color: Color,
+}
+
+impl Default for Application {
+    fn default() -> Self {
+        Self {
+            clear_color: Color::AliceBlue,
+        }
+    }
 }
