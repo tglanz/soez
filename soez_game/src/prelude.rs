@@ -4,4 +4,5 @@ pub use crate::{
     components::*,
     systems::*,
     resources::*,
+    game::*,
 };

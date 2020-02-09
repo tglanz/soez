@@ -1,0 +1,8 @@
+title: "soez"
+resolution:
+  width: 1024
+  height: 768
+assets_directory: "assets"
+clear_color:
+  SlateGray
+#    RGB: 0xff0000

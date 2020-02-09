@@ -1,14 +1,17 @@
+use serde::{Deserialize};
+
 use crate::prelude::Color;
 
-#[derive(Debug)]
-pub struct Application {
-    pub clear_color: Color,
+#[derive(Deserialize)]
+pub struct Resolution {
+    pub width: i32,
+    pub height: i32,
 }
 
-impl Default for Application {
-    fn default() -> Self {
-        Self {
-            clear_color: Color::AliceBlue,
-        }
-    }
+#[derive(Deserialize)]
+pub struct Application {
+    pub title: String,
+    pub resolution: Resolution,
+    pub assets_directory: String,
+    pub clear_color: Color,
 }
