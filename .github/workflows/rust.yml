@@ -15,6 +15,10 @@ jobs:
       env:
         RUST_BACKTRACE: 1
       run: cargo build --verbose
+    - name: Persist Build Artifacts
+      with:
+        name:  build
+        path: target/debug/build
     - name: Run tests
       working-directory: ./soez_game
       run: cargo test --verbose
