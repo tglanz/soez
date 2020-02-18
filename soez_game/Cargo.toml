@@ -18,10 +18,6 @@ nightly = [
     "specs/nightly"
 ]
 
-nobuild = [
-    "raylib-sys/nobuild"
-]
-
 [dependencies]
 log = "0.4.8"
 log4rs = "0.10.0"
