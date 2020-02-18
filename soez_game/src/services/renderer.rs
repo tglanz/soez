@@ -7,7 +7,7 @@ trait ToRaylibColor {
 
 impl ToRaylibColor for Color {
     fn to_raylib_color(&self) -> RaylibColor {
-        RaylibColor::from(self.rgba();)
+        RaylibColor::from(self.rgba())
     }
 }
 

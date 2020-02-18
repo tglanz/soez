@@ -1,3 +1,5 @@
+debug:
+  enable_backtrace: true
 title: "soez"
 resolution:
   width: 1024

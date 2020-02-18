@@ -9,7 +9,13 @@ pub struct Resolution {
 }
 
 #[derive(Deserialize)]
+pub struct Debug {
+    pub enable_backtrace: bool,
+}
+
+#[derive(Deserialize)]
 pub struct Application {
+    pub debug: Debug,
     pub title: String,
     pub resolution: Resolution,
     pub assets_directory: String,

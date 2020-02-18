@@ -1,7 +1,9 @@
 pub mod core;
-pub mod on_boarding;
+pub mod on_board;
+pub mod boot_load;
 
 pub use self::{
     core::*,
-    on_boarding::*,
+    on_board::*,
+    boot_load::*,
 };

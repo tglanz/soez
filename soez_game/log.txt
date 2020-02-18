@@ -1,3 +1,10 @@
-2020-02-09T11:48:30.522415500-08:00 - initializing game
-2020-02-09T11:48:31.226674200-08:00 - creating a dispatcher
-2020-02-09T11:48:31.229664700-08:00 - creating a world
+2020-02-18T14:26:17.291820800-08:00 - initializing game
+2020-02-18T14:26:18.007375800-08:00 - creating a dispatcher
+2020-02-18T14:26:18.008375200-08:00 - creating a world
+2020-02-18T14:26:18.014373800-08:00 - switch - popping
+2020-02-18T14:26:18.015372-08:00 - pop - popping state: "OnBoardState"
+2020-02-18T14:26:18.015372-08:00 - pop - exiting state: "OnBoardState"
+2020-02-18T14:26:18.015372-08:00 - switch - pushing
+2020-02-18T14:26:18.016373400-08:00 - push: skipping pause, no states
+2020-02-18T14:26:18.016373400-08:00 - push: pushing state: "BootLoadState"
+2020-02-18T14:26:18.017374300-08:00 - push: starting state: "BootLoadState"
