@@ -10,18 +10,21 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: install prerequsites
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev
+
     - name: build
       working-directory: ./soez_game
       env:
         RUST_BACKTRACE: full
-      run: cargo build --verbose
+      run: cargo build --releae --verbose
       
     - name: upload build artifacts
       uses: actions/upload-artifact@v1
       with:
         name:  build
-        path: target/debug/build
+        path: target/release/build
 
-    - name: Run tests
+    - name: test
       working-directory: ./soez_game
       run: cargo test --verbose
