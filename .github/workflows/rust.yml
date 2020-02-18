@@ -10,14 +10,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: install prerequsites
+    - name: install prerequisites
       run: sudo apt update && sudo apt-get install -y --fix-missing xorg-dev libglu1-mesa-dev
 
     - name: build
       working-directory: ./soez_game
       env:
         RUST_BACKTRACE: full
-      run: cargo build --releae --verbose
+      run: cargo build --release --verbose
       
     - name: upload build artifacts
       uses: actions/upload-artifact@v1
