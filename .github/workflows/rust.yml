@@ -19,11 +19,15 @@ jobs:
         RUST_BACKTRACE: full
       run: cargo build --release --verbose
       
-    - name: upload build artifacts
+    - name: generate docs
+      working-directory: ./soez_game
+      run: cargo doc --target-directory target/doc
+      
+    - name: upload docs
       uses: actions/upload-artifact@v1
       with:
-        name:  build
-        path: target/release/build
+        name:  target
+        path: ./soez_game/target/doc
 
     - name: test
       working-directory: ./soez_game
