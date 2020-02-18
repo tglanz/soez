@@ -10,15 +10,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build
+    - name: build
       working-directory: ./soez_game
       env:
-        RUST_BACKTRACE: 1
+        RUST_BACKTRACE: full
       run: cargo build --verbose
-    - name: Persist Build Artifacts
+      
+    - name: upload build artifacts
+      uses: actions/upload-artifact@v1
       with:
         name:  build
         path: target/debug/build
+
     - name: Run tests
       working-directory: ./soez_game
       run: cargo test --verbose
