@@ -52,7 +52,7 @@ impl<'a, 'b> Game<'a, 'b> {
         
         log::debug!("initializing game");
 
-        let (mut raylib_handle, raylib_thread) = raylib::init()
+        let (raylib_handle, raylib_thread) = raylib::init()
             .title(&application.title.clone())
             .size(
                 application.resolution.width,
