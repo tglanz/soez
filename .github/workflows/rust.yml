@@ -12,7 +12,9 @@ jobs:
 
     - name: Build
       working-directory: ./soez_game
-      run: cargo build --verbose
+      env:
+        RUST_BACKTRACE: 1
+      run: cargo build --verbose --features nobuild
     - name: Run tests
       working-directory: ./soez_game
       run: cargo test --verbose
