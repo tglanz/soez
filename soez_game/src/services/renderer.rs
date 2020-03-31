@@ -34,8 +34,8 @@ impl<'a> Renderer<'a> for RaylibRenderer<'a> {
 
     fn render(&mut self, rendering: &Rendering, position: &Position) {
         match rendering {
-            Rendering::Circle(radius, color) => self.draw.draw_circle(
-                position.vector.x as i32, position.vector.y as i32, *radius, color.to_raylib_color()),
-        }
+            Rendering::Circle(circle, attr) => self.draw.draw_circle(
+                position.vector.x as i32, position.vector.y as i32, circle.radius, attr.color.to_raylib_color()),
+            }
     }
 }
