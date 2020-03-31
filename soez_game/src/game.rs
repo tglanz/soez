@@ -61,7 +61,7 @@ impl<'a, 'b> Game<'a, 'b> {
 
         let mut dispatcher = create_dispatcher(raylib_thread);
         let world = create_world(&mut dispatcher, raylib_handle, application);
-        let pda = Pda::new(Box::new(OnBoardState));
+        let pda = Pda::new(Box::new(BootLoadState::default()));
 
         Self { dispatcher, world, pda }
     }
@@ -76,6 +76,6 @@ impl<'a, 'b> Game<'a, 'b> {
 
     pub fn update(&mut self) {
         self.dispatcher.dispatch(&self.world);
-        self.pda.update(&self.world);
+        self.pda.update(&mut self.world);
     }
 }
