@@ -35,7 +35,17 @@ impl<'a> Renderer<'a> for RaylibRenderer<'a> {
     fn render(&mut self, rendering: &Rendering, position: &Position) {
         match rendering {
             Rendering::Circle(circle, attr) => self.draw.draw_circle(
-                position.vector.x as i32, position.vector.y as i32, circle.radius, attr.color.to_raylib_color()),
-            }
+                position.vector.x as i32, position.vector.y as i32, circle.radius, attr.color.to_raylib_color()
+            ),
+            Rendering::Rectangle(rect, attr) => self.draw.draw_rectangle(
+                    position.vector.x as i32, position.vector.y as i32, rect.width as i32, rect.height as i32,
+                    attr.color.to_raylib_color()
+            ),
+            Rendering::Text(text, attr) => self.draw.draw_text(
+                &text, 
+                position.vector.x as i32, position.vector.y as i32, attr.font_size as i32, 
+                attr.color.to_raylib_color()
+            ),
+        }
     }
 }

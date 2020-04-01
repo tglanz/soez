@@ -1,7 +1,8 @@
 use specs::prelude::*;
+use serde::Deserialize;
 use nalgebra::Vector2;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub struct Acceleration {
     pub vector: Vector2<f32>
 }

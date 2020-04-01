@@ -1,6 +1,5 @@
 use std::path::Path;
 use crate::prelude::*;
-
 use serde::de::DeserializeOwned;
 
 pub fn load_yaml_resource<D, P>(path: P) -> D

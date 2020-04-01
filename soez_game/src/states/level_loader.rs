@@ -48,7 +48,7 @@ impl State for LevelLoaderState {
     fn on_start(&mut self, data: &mut StateData) -> Transition {
         self.load_map(data.world);
         self.load_tiled_map(data.world);
-        self.load_tilesets(data.world);
+        // self.load_tilesets(data.world);
         Transition::None
     }
 

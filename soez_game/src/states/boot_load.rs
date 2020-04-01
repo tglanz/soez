@@ -26,6 +26,14 @@ impl BootLoadState {
         let maps: Maps = util::load_ron_resource(maps_path);
         world.insert(maps);
     }
+
+    fn load_main_menu_prefab(&mut self, world: &mut World) {
+        let assets_directory = util::get_assets_directory(world);
+        let path = Path::new(&assets_directory).join("prefabs").join("main_menu.ron");
+        let prefab: EntitiesPrefab = util::load_ron_resource(path);        
+
+        log::info!("prefab: {:#?}", prefab);
+    }
 }
 
 impl State for BootLoadState {
@@ -38,13 +46,15 @@ impl State for BootLoadState {
         if !self.loaded {
             // TODO: async
             self.load_maps(data.world);
+            self.load_main_menu_prefab(data.world);
             self.loaded = true;
             Transition::None
         } else if Instant::now() - self.start_instant < Duration::from_secs(1) {
             Transition::None
         } else {
             let map_index = 0;
-            Transition::Switch(Box::new(LevelLoaderState::new(map_index)))
+            Transition::None
+//            Transition::Switch(Box::new(LevelLoaderState::new(map_index)))
         }
     }
 }

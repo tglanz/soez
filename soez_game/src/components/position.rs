@@ -1,7 +1,8 @@
 use specs::prelude::*;
+use serde::Deserialize;
 use nalgebra::Vector2;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub struct Position {
     pub vector: Vector2<f32>
 }
