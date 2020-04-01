@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "Launch Debug",
+            "target": "./target/debug/soez_game",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText",
+            "preLaunchTask": "cargo-build"
+        }
+
+    ]
+}

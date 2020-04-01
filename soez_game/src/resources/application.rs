@@ -14,10 +14,17 @@ pub struct Debug {
 }
 
 #[derive(Deserialize)]
-pub struct Application {
-    pub debug: Debug,
+pub struct Window {
     pub title: String,
     pub resolution: Resolution,
+    pub resizable: bool,
+    pub fullscreen: bool,
+    pub color: Color,
+}
+
+#[derive(Deserialize)]
+pub struct Application {
+    pub debug: Debug,
     pub assets_directory: String,
-    pub clear_color: Color,
+    pub window: Window,
 }

@@ -16,6 +16,24 @@ impl RenderSystem {
     }
 }
 
+fn update_screen_coordinates(screen_coordinates: &mut ScreenCoordinates, 
+    application: &Application, 
+    position: &Position, 
+    coordinate_system: &CoordinateSystem)
+{
+    // according the the position's coordinate system, we will know how to update
+    match coordinate_system {
+        CoordinateSystem::Screen => {
+            screen_coordinates.x = position.vector.x as i32;
+            screen_coordinates.y = position.vector.y as i32;
+        },
+        CoordinateSystem::Ndc => {
+            screen_coordinates.x = (position.vector.x * application.window.resolution.width as f32) as i32;
+            screen_coordinates.y = (position.vector.y * application.window.resolution.height as f32) as i32;
+        }
+    }
+}
+
 impl<'a> System<'a> for RenderSystem {
     type SystemData = (
         ReadExpect<'a, Application>,
@@ -28,26 +46,15 @@ impl<'a> System<'a> for RenderSystem {
         let draw = raylib_context.handle.begin_drawing(&self.raylib_thread);
         let mut renderer = RaylibRenderer::create(draw);
 
-        renderer.clear_background(&application.clear_color);
+        // we keep a single value and update it for each render target
+        let mut screen_coordinates = ScreenCoordinates::new(0, 0);
+
+        renderer.clear_background(&application.window.color);
         for (rendering, position) in (&renderings, &positions).join() {
-            renderer.render(rendering, position);
+            update_screen_coordinates(&mut screen_coordinates, 
+                &application, position,
+                rendering.coordinate_system.as_ref().unwrap_or(&CoordinateSystem::Screen));
+            renderer.render(rendering, &screen_coordinates);
         }
-        
-        // gfx.clear_background(0xfff);
-
-
-        // if self.raylib.handle.window_should_close() {
-        //     application.window_should_close = true;
-        //     return;
-        // }
-
-        // let mut d = self.raylib.handle.begin_drawing(&self.raylib.thread);
-        // d.clear_background(Color::WHITE);
-
-        // for (position, circle) in (&positions, &circles).join() {
-        //     d.draw_circle(position.vector.x as i32, position.vector.y as i32, circle.radius, raylib::core::color::Color::RED);
-        // }
-
-        // d.draw_text("Hello, world!", 12, 12, 20, Color::BLACK);
     }
 }

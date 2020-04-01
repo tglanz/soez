@@ -3,6 +3,8 @@ use std::{
     time::{Instant, Duration},
 };
 
+use specs::World;
+
 use crate::prelude::*;
 
 pub struct BootLoadState {
@@ -30,9 +32,8 @@ impl BootLoadState {
     fn load_main_menu_prefab(&mut self, world: &mut World) {
         let assets_directory = util::get_assets_directory(world);
         let path = Path::new(&assets_directory).join("prefabs").join("main_menu.ron");
-        let prefab: EntitiesPrefab = util::load_ron_resource(path);        
-
-        log::info!("prefab: {:#?}", prefab);
+        let prefab: EntitiesPrefab = util::load_ron_resource(path);
+        prefabs_manifestation::enitities(world, prefab);
     }
 }
 
@@ -41,6 +42,9 @@ impl State for BootLoadState {
         "BootLoadState"
     }
 
+    fn on_start(&mut self, data: &mut StateData) -> Transition {
+        Transition::None
+    }
 
     fn on_update(&mut self, data: &mut StateData) -> Transition {
         if !self.loaded {

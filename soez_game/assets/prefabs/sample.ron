@@ -1,0 +1,24 @@
+(
+    entities_prefabs: [(
+        components_prefabs: [
+            SingleF32((
+                value: 1.0
+            )),
+            Position((
+                vector: [2.0, 4.0]
+            )),
+            Velocity((
+                vector: [2.0, 4.0]
+            )),
+            Acceleration((
+                vector: [2.0, 4.0]
+            )),
+            Rendering(
+                Circle(
+                    (radius: 0.3),
+                    (color: Red)
+                )
+            )
+        ]
+    )]
+)

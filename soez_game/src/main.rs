@@ -13,7 +13,6 @@ pub mod components;
 pub mod systems;
 pub mod resources;
 pub mod prelude;
-pub mod geometry;
 pub mod game;
 
 fn main() {

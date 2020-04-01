@@ -1,24 +1,42 @@
 (
     entities_prefabs: [(
         components_prefabs: [
-            SingleF32((
-                value: 1.0
+            Rendering((
+                target: Text(
+                    "Main menu",
+                    (font_size: Big, color: Black)
+                ),
+                coordinate_system: Some(Ndc)
             )),
             Position((
-                vector: [2.0, 4.0]
+                vector: [.45, .1]
+            ))
+        ]
+    ), (
+        components_prefabs: [
+            Rendering((
+                target: Circle(
+                    (radius: 50.0),
+                    (color: PeachPuff)
+                ),
+                coordinate_system: Some(Ndc)
             )),
-            Velocity((
-                vector: [2.0, 4.0]
+            Position((
+                vector: [.50, .50]
+            ))
+        ],
+    ), (
+        components_prefabs: [
+            Rendering((
+                target: Rectangle(
+                    (width: 300.0, height: 100.),
+                    (color: PeachPuff)
+                ),
+                coordinate_system: Some(Ndc)
             )),
-            Acceleration((
-                vector: [2.0, 4.0]
-            )),
-            // Rendering((
-            //     Circle(
-            //         (radius: 0.3),
-            //         (color: Red)
-            //     )
-            // ))
+            Position((
+                vector: [.50, .90]
+            ))
         ]
     )]
 )

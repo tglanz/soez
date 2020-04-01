@@ -18,6 +18,7 @@ pub enum Color {
     AliceBlue,
     SeaGreen,
     SlateGray,
+    PeachPuff,
 }
 
 impl Color {
@@ -33,6 +34,7 @@ impl Color {
             Color::AliceBlue => (0xf0, 0xf8, 0xff),
             Color::SeaGreen =>  (0x2e, 0x8b, 0x57),
             Color::SlateGray =>  (0x70, 0x80, 0x90),
+            Color::PeachPuff => (0xff, 0xba, 0xd9),
 
             Color::RGB(value) => {
                 let [_, r, g, b] = value.to_be_bytes();

@@ -38,6 +38,26 @@ fn initialize_panic_hook(enable_backtrace: bool) {
     }));
 }
 
+fn create_raylib(application: &Application) -> (raylib::RaylibHandle, raylib::RaylibThread) {
+    let mut root = raylib::init();
+
+    let mut builder = root 
+        .title(&application.window.title.clone())
+        .size(
+            application.window.resolution.width,
+            application.window.resolution.height);
+    
+    if application.window.fullscreen {
+        builder.fullscreen();
+    }
+
+    if application.window.resizable {
+        builder.resizable();
+    }
+
+    builder.build()
+}
+
 pub struct Game<'a, 'b> {
     world: World,
     dispatcher: Dispatcher<'a, 'b>,
@@ -52,16 +72,13 @@ impl<'a, 'b> Game<'a, 'b> {
         
         log::debug!("initializing game");
 
-        let (raylib_handle, raylib_thread) = raylib::init()
-            .title(&application.title.clone())
-            .size(
-                application.resolution.width,
-                application.resolution.height)
-            .build();
+        let (raylib_handle, raylib_thread) = create_raylib(&application);
 
         let mut dispatcher = create_dispatcher(raylib_thread);
-        let world = create_world(&mut dispatcher, raylib_handle, application);
+        let mut world = create_world(&mut dispatcher, raylib_handle, application);
         let pda = Pda::new(Box::new(BootLoadState::default()));
+
+        bootstrap::bootstrap_all(&mut world);
 
         Self { dispatcher, world, pda }
     }
