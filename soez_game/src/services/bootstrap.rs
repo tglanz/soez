@@ -1,14 +1,11 @@
-use std::{
-    collections::HashMap
-};
-
 use crate::prelude::*;
 
 pub fn bootstrap_all(world: &mut World) {
-
+    bootstrap_resources(world);
 }
 
 pub fn bootstrap_resources(world: &mut World) {
-    let entities_prefabs_registry: HashMap<String, EntitiesPrefab> = HashMap::new();
-    world.insert(entities_prefabs_registry);
+    log::debug!("bootstrapping resources");
+    world.insert(Input::default());
+    world.insert(EntitiesPrefabsRegistry::new());
 }

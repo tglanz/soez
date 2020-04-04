@@ -1,10 +1,10 @@
-use serde::Deserialize;
 use nalgebra::Vector2;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub enum CoordinateSystem {
     Screen,
-    Ndc
+    Ndc,
 }
 
 pub type ScreenCoordinates = Vector2<i32>;

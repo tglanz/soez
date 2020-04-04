@@ -1,8 +1,6 @@
-use std::{
-    path::Path,
-};
 use crate::prelude::*;
 use specs::prelude::*;
+use std::path::Path;
 
 use level::LevelInfo;
 
@@ -17,7 +15,7 @@ impl LevelLoaderState {
         Self {
             loaded_map_resource: None,
             loaded_map_tiled: None,
-            map_index
+            map_index,
         }
     }
 
@@ -29,14 +27,14 @@ impl LevelLoaderState {
     pub fn load_tiled_map(&mut self, world: &World) {
         let assets_directory = util::get_assets_directory(world);
         let map = self.loaded_map_resource.as_ref().unwrap();
-        let path = Path::new(&assets_directory)
-            .join(&map.path);
+        let path = Path::new(&assets_directory).join(&map.path);
 
-        let tiled_map = tiled::parse_file(&path)
-            .expect(&format!("failed to parse tiled file: {:#?}", path.display()));
+        let tiled_map = tiled::parse_file(&path).expect(&format!(
+            "failed to parse tiled file: {:#?}",
+            path.display()
+        ));
 
         self.loaded_map_tiled = Some(tiled_map);
-        
     }
 }
 
@@ -53,15 +51,11 @@ impl State for LevelLoaderState {
     }
 
     fn on_update(&mut self, _data: &mut StateData) -> Transition {
-        
         if self.loaded_map_resource.is_some() && self.loaded_map_tiled.is_some() {
             let map_resource = self.loaded_map_resource.take().unwrap();
             let map_tiled = self.loaded_map_tiled.take().unwrap();
 
-            let info = LevelInfo::new(
-                map_resource,
-                map_tiled
-            );
+            let info = LevelInfo::new(map_resource, map_tiled);
 
             let state = LevelState::new(info);
             Transition::Switch(Box::new(state))

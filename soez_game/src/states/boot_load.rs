@@ -1,39 +1,33 @@
-use std::{
-    path::Path,
-    time::{Instant, Duration},
-};
-
 use specs::World;
 
 use crate::prelude::*;
 
 pub struct BootLoadState {
     pub loaded: bool,
-    pub start_instant: Instant
 }
 
 impl Default for BootLoadState {
     fn default() -> Self {
-        Self {
-            loaded: false,
-            start_instant: Instant::now()
-        }
+        Self { loaded: false }
     }
 }
 
 impl BootLoadState {
     fn load_maps(&mut self, world: &mut World) {
-        let assets_directory = util::get_assets_directory(world);
-        let maps_path = Path::new(&assets_directory).join("maps.ron");
+        log::debug!("loading maps");
+        let maps_path = util::get_assets_directory(world).join("maps.ron");
         let maps: Maps = util::load_ron_resource(maps_path);
         world.insert(maps);
     }
 
     fn load_main_menu_prefab(&mut self, world: &mut World) {
-        let assets_directory = util::get_assets_directory(world);
-        let path = Path::new(&assets_directory).join("prefabs").join("main_menu.ron");
-        let prefab: EntitiesPrefab = util::load_ron_resource(path);
-        prefabs_manifestation::enitities(world, prefab);
+        log::debug!("loading main menu prefab");
+        let prefab = util::load_prefab(world, "main_menu.ron");
+
+        // update registry
+        world
+            .fetch_mut::<EntitiesPrefabsRegistry>()
+            .insert("main-menu", prefab);
     }
 }
 
@@ -42,23 +36,16 @@ impl State for BootLoadState {
         "BootLoadState"
     }
 
-    fn on_start(&mut self, data: &mut StateData) -> Transition {
-        Transition::None
-    }
-
     fn on_update(&mut self, data: &mut StateData) -> Transition {
         if !self.loaded {
+            log::debug!("still not fully loaded, loading");
             // TODO: async
             self.load_maps(data.world);
             self.load_main_menu_prefab(data.world);
             self.loaded = true;
             Transition::None
-        } else if Instant::now() - self.start_instant < Duration::from_secs(1) {
-            Transition::None
         } else {
-            let map_index = 0;
-            Transition::None
-//            Transition::Switch(Box::new(LevelLoaderState::new(map_index)))
+            Transition::Switch(Box::new(MainMenuState))
         }
     }
 }

@@ -1,6 +1,4 @@
-pub use super::{
-    State
-};
+pub use super::State;
 
 pub enum Transition {
     None,

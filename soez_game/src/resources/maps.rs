@@ -1,4 +1,4 @@
-use serde::{Deserialize};
+use serde::Deserialize;
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Map {
@@ -8,9 +8,8 @@ pub struct Map {
 
 #[derive(Debug, Deserialize)]
 pub struct Maps {
-    maps: Vec<Map>
+    maps: Vec<Map>,
 }
-
 
 impl Maps {
     pub fn len(&self) -> usize {

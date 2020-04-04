@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Color {
@@ -22,18 +22,17 @@ pub enum Color {
 }
 
 impl Color {
-
     pub fn rgb(&self) -> (u8, u8, u8) {
         match self {
-            Color::Red =>       (0xff, 0x00, 0x00),
-            Color::Green =>     (0x00, 0xff, 0x00),
-            Color::Blue =>      (0x00, 0x00, 0xff),
-            Color::White =>     (0xff, 0xff, 0xff),
-            Color::Black =>     (0x00, 0x00, 0x00),
+            Color::Red => (0xff, 0x00, 0x00),
+            Color::Green => (0x00, 0xff, 0x00),
+            Color::Blue => (0x00, 0x00, 0xff),
+            Color::White => (0xff, 0xff, 0xff),
+            Color::Black => (0x00, 0x00, 0x00),
 
             Color::AliceBlue => (0xf0, 0xf8, 0xff),
-            Color::SeaGreen =>  (0x2e, 0x8b, 0x57),
-            Color::SlateGray =>  (0x70, 0x80, 0x90),
+            Color::SeaGreen => (0x2e, 0x8b, 0x57),
+            Color::SlateGray => (0x70, 0x80, 0x90),
             Color::PeachPuff => (0xff, 0xba, 0xd9),
 
             Color::RGB(value) => {
@@ -53,7 +52,7 @@ impl Color {
             Color::RGBA(value) => {
                 let [r, g, b, a] = value.to_be_bytes();
                 (r, g, b, a)
-            },
+            }
             other => {
                 let (r, g, b) = other.rgb();
                 (r, g, b, 0xff)

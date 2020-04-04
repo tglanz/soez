@@ -1,8 +1,8 @@
-use raylib::prelude::{RaylibDrawHandle, RaylibDraw, Color as RaylibColor};
+use raylib::prelude::{Color as RaylibColor, RaylibDraw, RaylibDrawHandle};
 
+use crate::components::renderable::*;
 use crate::prelude::*;
 use crate::services::geometry::*;
-use crate::components::renderable::*;
 
 trait ToRaylibColor {
     fn to_raylib_color(&self) -> RaylibColor;
@@ -15,7 +15,7 @@ impl ToRaylibColor for Color {
 }
 
 pub struct RaylibRenderer<'a> {
-    draw: RaylibDrawHandle<'a>
+    draw: RaylibDrawHandle<'a>,
 }
 
 pub trait Renderer<'a> {
@@ -38,10 +38,11 @@ impl<'a> RaylibRenderer<'a> {
         };
 
         self.draw.draw_text(
-            &text, 
-            attr.location.x as i32, attr.location.y as i32,
-            font_size_value, 
-            attr.color.to_raylib_color()
+            &text,
+            attr.location.x as i32,
+            attr.location.y as i32,
+            font_size_value,
+            attr.color.to_raylib_color(),
         )
     }
 
@@ -49,20 +50,33 @@ impl<'a> RaylibRenderer<'a> {
         match geo {
             Geometry::Circle { center, radius } => {
                 if let Some(color) = &attr.fill_color {
-                    self.draw.draw_circle(center.x as i32, center.y as i32, *radius, color.to_raylib_color());
+                    self.draw.draw_circle(
+                        center.x as i32,
+                        center.y as i32,
+                        *radius,
+                        color.to_raylib_color(),
+                    );
                 }
-            },
+            }
             Geometry::Rectangle { center, size } => {
                 if let Some(color) = &attr.fill_color {
-                    self.draw.draw_rectangle(center.x as i32, center.y as i32, 
-                                             size.x as i32, size.y as i32, 
-                                             color.to_raylib_color());
+                    self.draw.draw_rectangle(
+                        center.x as i32,
+                        center.y as i32,
+                        size.x as i32,
+                        size.y as i32,
+                        color.to_raylib_color(),
+                    );
                 }
 
                 if let Some(color) = &attr.border_color {
-                    self.draw.draw_rectangle_lines(center.x as i32, center.y as i32, 
-                        size.x as i32, size.y as i32, 
-                        color.to_raylib_color());
+                    self.draw.draw_rectangle_lines(
+                        center.x as i32,
+                        center.y as i32,
+                        size.x as i32,
+                        size.y as i32,
+                        color.to_raylib_color(),
+                    );
                 }
             }
         }
@@ -70,7 +84,6 @@ impl<'a> RaylibRenderer<'a> {
 }
 
 impl<'a> Renderer<'a> for RaylibRenderer<'a> {
-
     fn clear_background(&mut self, color: &Color) {
         self.draw.clear_background(color.to_raylib_color())
     }

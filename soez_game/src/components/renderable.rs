@@ -1,8 +1,8 @@
-use specs::prelude::*;
 use serde::Deserialize;
+use specs::prelude::*;
 
-use crate::services::Color;
 use crate::services::geometry;
+use crate::services::Color;
 
 #[derive(Debug, Deserialize)]
 pub enum FontSize {
@@ -10,14 +10,14 @@ pub enum FontSize {
     Medium,
     Big,
     Huge,
-    Custom(i32)
+    Custom(i32),
 }
 
 #[derive(Debug, Deserialize)]
 pub struct TextAttributes {
     pub color: Color,
     pub font_size: FontSize,
-    pub location: geometry::Point
+    pub location: geometry::Point,
 }
 
 #[derive(Debug, Deserialize)]
@@ -29,7 +29,7 @@ pub struct GeometryAttributes {
 #[derive(Debug, Deserialize)]
 pub enum Renderable {
     Text(String, TextAttributes),
-    Geometry(geometry::Geometry, GeometryAttributes)
+    Geometry(geometry::Geometry, GeometryAttributes),
 }
 
 impl Component for Renderable {

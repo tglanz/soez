@@ -1,5 +1,5 @@
+use nalgebra::Vector2;
 use serde::Deserialize;
-use nalgebra::{Vector2};
 
 pub type Scalar = f32;
 pub type Point = Vector2<Scalar>;

@@ -1,9 +1,5 @@
-pub mod transition;
-pub mod state;
 pub mod pda;
+pub mod state;
+pub mod transition;
 
-pub use self::{
-    transition::*,
-    state::*,
-    pda::*,
-};
+pub use self::{pda::*, state::*, transition::*};

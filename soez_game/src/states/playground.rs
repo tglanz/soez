@@ -1,14 +1,10 @@
 use crate::prelude::State;
 
-pub struct PlaygroundState {
-
-}
+pub struct PlaygroundState {}
 
 impl Default for PlaygroundState {
     fn default() -> Self {
-        Self {
-
-        }
+        Self {}
     }
 }
 

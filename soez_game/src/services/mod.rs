@@ -1,14 +1,9 @@
 pub mod color;
-pub mod renderer;
 pub mod coordinates;
 pub mod geometry;
+pub mod renderer;
 
-pub mod prefabs_manifestation;
 pub mod bootstrap;
+pub mod prefabs_manifestation;
 
-pub use self::{
-    color::*,
-    renderer::*,
-    coordinates::*,
-    geometry::*,
-};
+pub use self::{color::*, coordinates::*, geometry::*, renderer::*};

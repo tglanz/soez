@@ -7,21 +7,21 @@ pub struct LevelInfo {
 
 impl LevelInfo {
     pub fn new(map_resource: Map, map_tiled: tiled::Map) -> Self {
-        Self { map_resource, map_tiled }
+        Self {
+            map_resource,
+            map_tiled,
+        }
     }
 }
 
 pub struct LevelState {
-    pub info: LevelInfo
+    pub info: LevelInfo,
 }
 
 impl LevelState {
     pub fn new(info: LevelInfo) -> Self {
-        Self {
-            info
-        }
+        Self { info }
     }
-
 }
 
 impl State for LevelState {

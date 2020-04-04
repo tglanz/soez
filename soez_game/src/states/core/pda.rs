@@ -2,14 +2,11 @@ pub use specs::World;
 
 use crate::prelude::*;
 
-pub use super::{
-    Transition,
-    State,
-};
+pub use super::{State, Transition};
 
 pub struct Pda {
     started_initial_state: bool,
-    states: Vec<Box<dyn State>>
+    states: Vec<Box<dyn State>>,
 }
 
 impl Pda {
@@ -23,16 +20,20 @@ impl Pda {
 
     /// mutably peek the top state
     pub fn peek_mut(&mut self) -> &mut Box<dyn State> {
-        self.states.last_mut().expect("attempted to `first` on an empty pda")
+        self.states
+            .last_mut()
+            .expect("attempted to `first` on an empty pda")
     }
 
     /// peek the top state
     pub fn peek(&self) -> &Box<dyn State> {
-        self.states.last().expect("attempted to `first` on an empty pda")
+        self.states
+            .last()
+            .expect("attempted to `first` on an empty pda")
     }
 
     /// push a new state to the stack
-    /// 
+    ///
     /// events flow
     /// 1. pause current state
     /// 2. push state, and start it
@@ -71,7 +72,6 @@ impl Pda {
     }
 
     pub fn update(&mut self, world: &mut World) {
-
         let data = &mut StateData::new(world);
 
         let mut next_transition = if !self.started_initial_state {
@@ -86,15 +86,15 @@ impl Pda {
                 Transition::Pop => {
                     self.pop(data);
                     None
-                },
+                }
                 Transition::Push(new_state) => Some(self.push(new_state, data)),
                 Transition::Switch(new_state) => Some(self.switch(new_state, data)),
                 Transition::Quit => {
                     data.world.fetch_mut::<Signals>().pending_quit = true;
                     None
-                },
+                }
                 Transition::None => None,
             }
-        };
+        }
     }
 }

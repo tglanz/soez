@@ -17,8 +17,7 @@
                 Rectangle(
                     center: [220, 185],
                     size: [160, 50]
-                ),
-                (
+                ), (
                     fill_color: Some(PeachPuff),
                 )
             ))

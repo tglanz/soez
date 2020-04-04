@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::vec::Vec;
 
 use serde::Deserialize;
@@ -10,7 +11,7 @@ pub enum ComponentPrefab {
     Acceleration(Acceleration),
     Position(Position),
     Velocity(Velocity),
-    SingleF32(SingleF32)
+    SingleF32(SingleF32),
 }
 
 #[derive(Debug, Deserialize)]
@@ -20,5 +21,7 @@ pub struct EntityPrefab {
 
 #[derive(Debug, Deserialize)]
 pub struct EntitiesPrefab {
-    pub entities_prefabs: Vec<EntityPrefab>
+    pub entities_prefabs: Vec<EntityPrefab>,
 }
+
+pub type EntitiesPrefabsRegistry = HashMap<&'static str, EntitiesPrefab>;
