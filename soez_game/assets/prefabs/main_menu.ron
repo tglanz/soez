@@ -1,11 +1,36 @@
 (
     entities_prefabs: [(
         components_prefabs: [
+            Renderable(Geometry(
+                Circle(
+                    center: [220, 200],
+                    radius: 60.0
+                ),
+                (
+                    fill_color: Some(PeachPuff),
+                )
+            ))
+        ]
+    ), (
+        components_prefabs: [
+            Renderable(Geometry(
+                Rectangle(
+                    center: [220, 185],
+                    size: [160, 50]
+                ),
+                (
+                    fill_color: Some(PeachPuff),
+                )
+            ))
+        ]
+    ), (
+        components_prefabs: [
             Renderable(Text(
-                "Main menu", (
+                "Main menu",
+                (
                     font_size: Big, 
                     color: Black, 
-                    location: [200, 200], 
+                    location: [200, 190], 
                 )
             )),
         ]
