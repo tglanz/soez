@@ -3,7 +3,6 @@ use serde::Deserialize;
 
 use crate::services::Color;
 use crate::services::geometry;
-use crate::services::coordinates::CoordinateSystem;
 
 #[derive(Debug, Deserialize)]
 pub enum FontSize {
@@ -18,30 +17,21 @@ pub enum FontSize {
 pub struct TextAttributes {
     pub color: Color,
     pub font_size: FontSize,
+    pub location: geometry::Point
 }
 
 #[derive(Debug, Deserialize)]
 pub struct GeometryAttributes {
-    pub color: Color,
+    pub fill_color: Option<Color>,
+    pub border_color: Option<Color>,
 }
 
 #[derive(Debug, Deserialize)]
-pub enum RenderingTarget {
-
-    // Textual Targets
+pub enum Renderable {
     Text(String, TextAttributes),
-
-    // Geometric Targets
-    Circle(geometry::Circle, GeometryAttributes),
-    Rectangle(geometry::Rectangle, GeometryAttributes), 
+    Geometry(geometry::Geometry, GeometryAttributes)
 }
 
-#[derive(Debug, Deserialize)]
-pub struct Rendering {
-    pub target: RenderingTarget,
-    pub coordinate_system: Option<CoordinateSystem>
-}
-
-impl Component for Rendering {
+impl Component for Renderable {
     type Storage = VecStorage<Self>;
 }

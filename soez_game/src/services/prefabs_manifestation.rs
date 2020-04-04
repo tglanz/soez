@@ -8,7 +8,7 @@ fn with_component_prefab<'a>(builder: EntityBuilder<'a>, component_prefab: Compo
     match component_prefab {
         ComponentPrefab::Position(component) => builder.with(component),
         ComponentPrefab::Velocity(component) => builder.with(component),
-        ComponentPrefab::Rendering(component) => builder.with(component),
+        ComponentPrefab::Renderable(component) => builder.with(component),
         ComponentPrefab::Acceleration(component) => builder.with(component),
         ComponentPrefab::SingleF32(component) => builder.with(component),
     }

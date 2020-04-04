@@ -1,12 +1,12 @@
 use serde::Deserialize;
+use nalgebra::{Vector2};
+
+pub type Scalar = f32;
+pub type Point = Vector2<Scalar>;
+pub type Size = Vector2<Scalar>;
 
 #[derive(Debug, Deserialize)]
-pub struct Rectangle {
-    pub width: f32,
-    pub height: f32,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct Circle {
-    pub radius: f32,
+pub enum Geometry {
+    Rectangle { center: Point, size: Size },
+    Circle { center: Point, radius: Scalar },
 }

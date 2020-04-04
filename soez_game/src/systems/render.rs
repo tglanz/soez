@@ -38,23 +38,24 @@ impl<'a> System<'a> for RenderSystem {
     type SystemData = (
         ReadExpect<'a, Application>,
         WriteExpect<'a, RaylibContext>,
-        ReadStorage<'a, Rendering>,
-        ReadStorage<'a, Position>,
+        ReadStorage<'a, Renderable>,
     );
 
-    fn run(&mut self, (application, mut raylib_context, renderings, positions): Self::SystemData) {
+    fn run(&mut self, (application, mut raylib_context, renderables): Self::SystemData) {
         let draw = raylib_context.handle.begin_drawing(&self.raylib_thread);
         let mut renderer = RaylibRenderer::create(draw);
 
         // we keep a single value and update it for each render target
-        let mut screen_coordinates = ScreenCoordinates::new(0, 0);
+        // let mut screen_coordinates = ScreenCoordinates::new(0, 0);
 
         renderer.clear_background(&application.window.color);
-        for (rendering, position) in (&renderings, &positions).join() {
-            update_screen_coordinates(&mut screen_coordinates, 
-                &application, position,
-                rendering.coordinate_system.as_ref().unwrap_or(&CoordinateSystem::Screen));
-            renderer.render(rendering, &screen_coordinates);
+        for (renderable, ) in (&renderables, ).join() {
+            // update_screen_coordinates(&mut screen_coordinates, 
+            //     &application, position,
+            //     renderable.coordinate_system.as_ref().unwrap_or(&CoordinateSystem::Screen));
+            //renderer.render(renderable, &screen_coordinates);
+
+            renderer.render(renderable);
         }
     }
 }

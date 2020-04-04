@@ -6,9 +6,9 @@ use crate::components::*;
 
 #[derive(Debug, Deserialize)]
 pub enum ComponentPrefab {
+    Renderable(Renderable),
     Acceleration(Acceleration),
     Position(Position),
-    Rendering(Rendering),
     Velocity(Velocity),
     SingleF32(SingleF32)
 }

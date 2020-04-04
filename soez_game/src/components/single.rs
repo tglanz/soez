@@ -1,6 +1,5 @@
 use specs::prelude::*;
 use serde::Deserialize;
-use nalgebra::Vector2;
 
 #[derive(Debug, Deserialize)]
 pub struct SingleF32 {
